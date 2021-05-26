@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<center>
+    <h4>Single File Upload</h4>
+    <div>
+        @*@Html.TextBox("file", "", new { type = "file"})
+        <input type="submit" value="Save files" />
+        @ViewBag.Message*@
+
+        <form asp-controller="Home" asp-action="SingleFile"
+              enctype="multipart/form-data" method="post">
+            <input type="file" name="file" onchange="UploadFile(event)" />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</center>
+
+
+@section scripts {
+    <script>
+        var UploadFile = function (e) {
+            var file = e.target.files[0];
+            var formData = new FormData();
+            formData.append("file", file);
+            axios.post("/Home/SingleFile", formData);
+        }
+    </script>
+}
